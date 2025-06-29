@@ -1,0 +1,43 @@
+* {
+  color: white;
+  font-size: calc(10px + 2vmin);
+  font-family: monospace;
+}
+
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.App-header {
+  font-size: calc(30px + 2vmin);
+  margin: 2vmin;
+}
+
+label {
+  display: 'block';
+  margin: 20px;
+}
+
+input {
+  font-size: calc(7px + 2vmin);
+  padding: 10px;
+  color: #282c34;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+}
+
+button {
+  margin: 20px;
+  background-color: #282c34;
+  padding: 10px;
+}
+
