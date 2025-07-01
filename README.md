@@ -19,7 +19,18 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Backend
 
-### Setup
+### Run with Docker
+```bash
+# build docker image 
+cd server
+docker build -t url_shortener_flask:v1 .
+
+# run app 
+docker run -p 127.0.0.1:8000:8000 url_shortener_flask:v1
+```
+
+
+### Run without docker
 ```bash
 # create python virtual environment: 
 python3 -m venv venv
@@ -34,7 +45,6 @@ flask_sqlalchemy \
 flask-cors \
 ```
 
-### Run
 ```bash
 # to enable debugger (ignore if not)
 export FLASK_ENV=development
