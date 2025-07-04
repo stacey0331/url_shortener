@@ -3,6 +3,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Setup .env to talk to backend
+Create `.env` file under `./client` and put: 
+```
+REACT_APP_API_URL=http://localhost:8000
+```
+Change localhost to your host name if needed
+
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -20,35 +28,21 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Backend
 
 ### Run with Docker
-```bash
-# build docker image 
-cd server
-docker build -t url_shortener_flask:v1 .
-
-# run app 
-docker run -p 127.0.0.1:8000:8000 url_shortener_flask:v1
+Create `.env` file under `./server` and put your db credentials: 
+```
+POSTGRES_USER=youruser
+POSTGRES_PASSWORD=yourpassword
+POSTGRES_DB=url_map
+DATABASE_URL=postgresql://youruser:yourpassword@postgres:5432/url_map
 ```
 
-
-### Run without docker
+Run flask app and postgres together with docker-compose:
+Use the `--build` flag if you need to rebuild the flask image
 ```bash
-# create python virtual environment: 
-python3 -m venv venv
-
-# activate virtual environment: 
-source venv/bin/activate
-
-# install flask and db librarires:
-pip3 install Flask \
-psycopg2-binary \
-flask_sqlalchemy \
-flask-cors \
+docker-compose up --build
 ```
 
+To rebuild container/volume/network (note: will wipe out all data in volumes!) 
 ```bash
-# to enable debugger (ignore if not)
-export FLASK_ENV=development
-
-# run app
-flask run 
+docker-compose down -v
 ```

@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    image: url_shortener_flask:v1
+    container_name: flask-app
+    networks:
+      - url-shortener
+    restart: unless-stopped
+    ports: 
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:15
+    container_name: 'postgres'
+    networks:
+      - url-shortener
+    environment: 
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+networks:
+  url-shortener:
+
+volumes: 
+  pgdata:
+    

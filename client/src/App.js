@@ -6,15 +6,15 @@ function App() {
   const [shortUrl, setShortUrl] = useState('');
 
   const handleSubmit = async (e) => {
-    e.prventDefault();
-
+    e.preventDefault();
+    console.log(`${process.env.REACT_APP_API_URL}/api/shorten`);
     try {
-      const res = await fetch('', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/shorten`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ original_url: originalUrl}),
+        body: JSON.stringify({ original_url: originalUrl }),
       });
   
       const data = await res.json();
@@ -37,11 +37,11 @@ function App() {
       </header>
 
       <form onSubmit={handleSubmit}>
-        <label htmlfor="longUrl">
+        <label htmlFor="longUrl">
             Please enter your long url here: 
         </label>
         <input
-          type="url"
+          type="text"
           name="longUrl"
           placeholder="e.g. www.google.com"
           value={originalUrl}
