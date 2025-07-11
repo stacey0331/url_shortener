@@ -46,3 +46,18 @@ To rebuild container/volume/network (note: will wipe out all data in volumes!)
 ```bash
 docker-compose down -v
 ```
+
+Connect to the postgresSQL through terminal-based frontend: 
+```bash
+docker exec -it <db_container_id> psql -U <username> -d <db name>
+```
+
+
+## TODOs
+- Save original url with https://
+- Duplicate original url should produce the same shortened url
+- Write tests
+- (optional) logging detect anomaly? 
+- seperaate dev and prod config (e.g. .env.dev)
+- tag local version as a release
+- deploy to aws
