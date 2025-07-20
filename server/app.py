@@ -5,7 +5,7 @@ import os
 import requests
 
 app = Flask(__name__)
-CORS(app) # todo: best to add origins later
+CORS(app) # todo: best to add origins
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 db = SQLAlchemy(app)
 
@@ -48,14 +48,23 @@ def is_valid_url(url: str, timeout: int) -> bool:
 @app.route('/api/shorten', methods=['POST'])
 def shorten_url():
     data = request.get_json(silent=True)
+    original_url = data['original_url']
     if not data:
         return jsonify({"error": "Request must be JSON"}), 400
-    if 'original_url' not in data or not data['original_url'].strip():
+    if 'original_url' not in data or not original_url.strip():
         return jsonify({"error": "Field 'original_url' required"}), 400
-    if not is_valid_url(data['original_url'], 5):
+    
+    if not original_url.startswith("https://") and not original_url.startswith("http://"):
+        original_url = "https://" + original_url
+    
+    res = URLMap.query.filter_by(original_url=original_url).first()
+    if res:
+        return jsonify({"short_url": encode_base62(res.id)}), 200
+
+    if not is_valid_url(original_url, 5):
         return jsonify({"error": "Original url not reachable"}), 400
 
-    new_url = URLMap(original_url=data['original_url'])
+    new_url = URLMap(original_url=original_url)
     db.session.add(new_url)
     db.session.commit()
     return jsonify({"short_url": encode_base62(new_url.id)}), 200

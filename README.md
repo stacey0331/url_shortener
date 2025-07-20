@@ -1,5 +1,6 @@
 # URL Shortener
 ## Frontend
+Please cd into directory `/client` to execute commands. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -26,6 +27,10 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 
 ## Backend
+Please cd into directory `/server` to execute commands. 
+
+### Implementation Summary
+The shortened URL will be the base 62 encoded id of the original URL stored in the database. 
 
 ### Run with Docker
 Create `.env` file under `./server` and put your db credentials: 
@@ -51,13 +56,18 @@ Connect to the postgresSQL through terminal-based frontend:
 ```bash
 docker exec -it <db_container_id> psql -U <username> -d <db name>
 ```
-
+### Test flask backend
+```
+docker-compose run --rm web pytest
+```
 
 ## TODOs
+- (optional) logging detect anomaly? 
+- seperate dev and prod config (e.g. .env.dev)
+- tag local version as a release
+- deploy to aws
+
+## Completed TODOs
 - Save original url with https://
 - Duplicate original url should produce the same shortened url
 - Write tests
-- (optional) logging detect anomaly? 
-- seperaate dev and prod config (e.g. .env.dev)
-- tag local version as a release
-- deploy to aws
